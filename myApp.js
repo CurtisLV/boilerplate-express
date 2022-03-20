@@ -2,11 +2,17 @@ var express = require('express');
 var app = express();
 require('dotenv').config();
 
-console.log('Hello World');
+// console.log('Hello World');
 
 // app.get('/', (req, res) => {
 //     res.send('Hello Express');
 // });
+
+app.use((req, res, next) => {
+    let finalMsg = `${req.method} ${req.path} - ${req.ip}`;
+    console.log(finalMsg);
+    next();
+});
 
 absolutePath = __dirname + '/views/index.html';
 
