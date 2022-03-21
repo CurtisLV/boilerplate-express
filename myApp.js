@@ -1,5 +1,6 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+
+const app = express();
 require('dotenv').config();
 
 // console.log('Hello World');
@@ -9,18 +10,34 @@ require('dotenv').config();
 // });
 
 app.use((req, res, next) => {
-    let finalMsg = `${req.method} ${req.path} - ${req.ip}`;
+    const finalMsg = `${req.method} ${req.path} - ${req.ip}`;
     console.log(finalMsg);
     next();
 });
 
-absolutePath = __dirname + '/views/index.html';
+app.get(
+    '/now',
+    (req, res, next) => {
+        req.time = new Date().toString();
+        next();
+    },
+    (req, res) => {
+        res.send({ time: req.time });
+    }
+);
+
+app.get('/:word/echo', (req, res) => {
+    let word = req.params.word;
+    res.send({ echo: word });
+});
+
+absolutePath = `${__dirname}/views/index.html`;
 
 app.get('/', (req, res) => {
     res.sendFile(absolutePath);
 });
 
-abolPath2 = __dirname + '/public';
+abolPath2 = `${__dirname}/public`;
 app.use('/public', express.static(abolPath2));
 
 app.get('/json', (req, res) => {
