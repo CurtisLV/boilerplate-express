@@ -15,6 +15,13 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/name', (req, res) => {
+    //
+    let { first: firstName, last: lastName } = req.query;
+
+    res.json({ name: `${firstName} ${lastName}` });
+});
+
 app.get(
     '/now',
     (req, res, next) => {
