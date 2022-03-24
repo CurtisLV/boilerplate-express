@@ -1,5 +1,5 @@
+const bodyParser = require('body-parser');
 const express = require('express');
-
 const app = express();
 require('dotenv').config();
 
@@ -8,6 +8,15 @@ require('dotenv').config();
 // app.get('/', (req, res) => {
 //     res.send('Hello Express');
 // });
+
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+
+app.post('/name', (req, res) => {
+    //
+    let { first: firstName, last: lastName } = req.body;
+    res.json({ name: `${firstName} ${lastName}` });
+});
 
 app.use((req, res, next) => {
     const finalMsg = `${req.method} ${req.path} - ${req.ip}`;
